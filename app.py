@@ -12,10 +12,15 @@ def predecir():
         return jsonify({'error': 'No se envió imagen'}), 400
 
     img_file = request.files['imagen']
-    img_path = os.path.join("temp", img_file.filename)
+    
+    # Asegurar carpeta temp/imagenes
+    folder = os.path.join("temp", "imagenes")
+    os.makedirs(folder, exist_ok=True)
+    
+    img_path = os.path.join(folder, img_file.filename)
     img_file.save(img_path)
 
-    # Simulación de predicción (ejemplo aleatorio)
+    # Simulación de predicción
     resultado = random.choice(clases)
     return jsonify({'prediccion': resultado})
 
